@@ -2,11 +2,12 @@ package main
 
 import (
 	"bufio"
+	"os"
+	"strings"
+
 	"calculator/pkg/calc"
 	"calculator/pkg/calc/command"
 	"calculator/pkg/calc/expression"
-	"os"
-	"strings"
 )
 
 func main() {

@@ -1,9 +1,10 @@
 package command
 
 import (
-	"calculator/pkg/calc/expression"
 	"fmt"
 	"io"
+
+	"calculator/pkg/calc/expression"
 )
 
 func NewCommandPrint(id string, storage expression.Storage, out io.Writer) Command {

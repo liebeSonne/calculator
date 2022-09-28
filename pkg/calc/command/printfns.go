@@ -1,11 +1,12 @@
 package command
 
 import (
-	"calculator/pkg/calc/expression"
 	"fmt"
 	"io"
 	"sort"
 	"strings"
+
+	"calculator/pkg/calc/expression"
 )
 
 func NewCommandPrintFns(storage expression.Storage, out io.Writer) Command {
