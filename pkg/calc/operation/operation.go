@@ -7,5 +7,5 @@ type Operand interface {
 }
 
 type Operation interface {
-	Calculate(operand1 *Operand, operand2 *Operand) *float64
+	Calculate(operand1 Operand, operand2 Operand) *float64
 }

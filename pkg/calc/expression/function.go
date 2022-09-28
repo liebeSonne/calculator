@@ -51,5 +51,5 @@ func (f *function) ID() string {
 }
 
 func (f *function) Value() *float64 {
-	return f.operation.Calculate((*operation.Operand)(f.operand1), (*operation.Operand)(f.operand2))
+	return f.operation.Calculate((operation.Operand)(*f.operand1), (operation.Operand)(*f.operand2))
 }
