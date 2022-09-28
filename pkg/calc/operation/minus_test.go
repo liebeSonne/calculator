@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOperationPlus_Calculate(t *testing.T) {
+func TestOperationMinus_Calculate(t *testing.T) {
 	testCases := []struct {
 		testName string
 		operand1 Operand
@@ -14,28 +14,40 @@ func TestOperationPlus_Calculate(t *testing.T) {
 		result   *float64
 	}{
 		{
-			"two positive",
-			newMockValueOperand(3.0),
+			"two positive, positive result",
+			newMockValueOperand(7.0),
 			newMockValueOperand(4.0),
-			mockValue(7.0),
+			mockValue(3.0),
 		},
 		{
-			"two negative",
-			newMockValueOperand(-3.0),
-			newMockValueOperand(-4.0),
-			mockValue(-7.0),
+			"two positive, negative result",
+			newMockValueOperand(4.0),
+			newMockValueOperand(7.0),
+			mockValue(-3.0),
 		},
 		{
-			"positive and negative, negative result",
-			newMockValueOperand(3.0),
+			"two negative, negative result",
+			newMockValueOperand(-7.0),
 			newMockValueOperand(-4.0),
-			mockValue(-1.0),
+			mockValue(-3.0),
+		},
+		{
+			"two negative, positive result",
+			newMockValueOperand(-4.0),
+			newMockValueOperand(-7.0),
+			mockValue(3.0),
 		},
 		{
 			"positive and negative, positive result",
+			newMockValueOperand(3.0),
+			newMockValueOperand(-4.0),
+			mockValue(7.0),
+		},
+		{
+			"positive and negative, negative result",
 			newMockValueOperand(-3.0),
 			newMockValueOperand(4.0),
-			mockValue(1.0),
+			mockValue(-7.0),
 		},
 		{
 			"nil operand and value",
@@ -66,7 +78,7 @@ func TestOperationPlus_Calculate(t *testing.T) {
 	for _, testCase := range testCases {
 		testCase := testCase
 		f := func(t *testing.T) {
-			operation := NewPlusOperation()
+			operation := NewMinusOperation()
 			result := operation.Calculate(testCase.operand1, testCase.operand2)
 
 			if testCase.result == nil {
