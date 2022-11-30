@@ -43,14 +43,16 @@ type Parser interface {
 
 func NewParser(storage expression.Storage, out io.Writer) Parser {
 	return &parser{
-		storage: storage,
-		out:     out,
+		storage:      storage,
+		out:          out,
+		cacheStorage: operation.NewCacheOperationStorage(),
 	}
 }
 
 type parser struct {
-	storage expression.Storage
-	out     io.Writer
+	storage      expression.Storage
+	out          io.Writer
+	cacheStorage operation.CacheStorage
 }
 
 func (p *parser) CreateCommand(str string) *Command {
@@ -169,12 +171,14 @@ func (p *parser) createFnOpCommand(str string) *Command {
 		if id == nil || id2 == nil || id3 == nil || op == nil {
 			return nil
 		}
-		operation := p.createOperator(*op)
-		if operation == nil {
+		operationItem := p.createOperator(*op)
+		if operationItem == nil {
 			return nil
 		}
 
-		cmd := NewCommandFnOp(*id, *id2, *operation, *id3, p.storage)
+		cachedOperation := operation.NewCachedOperation(*operationItem, *op, &p.cacheStorage)
+
+		cmd := NewCommandFnOp(*id, *id2, cachedOperation, *id3, p.storage)
 		return &cmd
 	}
 	return nil
