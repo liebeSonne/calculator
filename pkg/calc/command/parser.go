@@ -176,9 +176,11 @@ func (p *parser) createFnOpCommand(str string) *Command {
 			return nil
 		}
 
-		cachedOperation := operation.NewCachedOperation(*operationItem, *op, &p.cacheStorage)
+		//cachedOperation := operation.NewCachedOperation(*operationItem, *op, &p.cacheStorage)
+		//cmd := NewCommandFnOp(*id, *id2, cachedOperation, *id3, p.storage)
 
-		cmd := NewCommandFnOp(*id, *id2, cachedOperation, *id3, p.storage)
+		cmd := NewCommandFnOp(*id, *id2, *operationItem, *id3, p.storage)
+
 		return &cmd
 	}
 	return nil
