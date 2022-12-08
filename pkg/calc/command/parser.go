@@ -43,18 +43,16 @@ type Parser interface {
 
 func NewParser(storage expression.Storage, out io.Writer, cmdBuilder CmcBuilder) Parser {
 	return &parser{
-		storage:      storage,
-		out:          out,
-		cacheStorage: operation.NewCacheOperationStorage(),
-		cmdBuilder:   cmdBuilder,
+		storage:    storage,
+		out:        out,
+		cmdBuilder: cmdBuilder,
 	}
 }
 
 type parser struct {
-	storage      expression.Storage
-	out          io.Writer
-	cacheStorage operation.CacheStorage
-	cmdBuilder   CmcBuilder
+	storage    expression.Storage
+	out        io.Writer
+	cmdBuilder CmcBuilder
 }
 
 func (p *parser) CreateCommand(str string) *Command {
@@ -156,7 +154,6 @@ func (p *parser) createFnIdCommand(str string) *Command {
 		if id == nil || id2 == nil {
 			return nil
 		}
-		//cmd := NewCommandFn(*id, *id2, p.storage)
 		cmd := p.cmdBuilder.CreateFnIdCommand(*id, *id2)
 		return cmd
 	}
@@ -178,11 +175,6 @@ func (p *parser) createFnOpCommand(str string) *Command {
 		if operationItem == nil {
 			return nil
 		}
-
-		//cachedOperation := operation.NewCachedOperation(*operationItem, *op, &p.cacheStorage)
-		//cmd := NewCommandFnOp(*id, *id2, cachedOperation, *id3, p.storage)
-
-		//cmd := NewCommandFnOp(*id, *id2, *operationItem, *id3, p.storage)
 
 		cmd := p.cmdBuilder.CreateFnOpCommand(*id, *id2, *operationItem, *id3)
 
