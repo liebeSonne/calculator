@@ -2,7 +2,6 @@ package calc
 
 import (
 	"calculator/pkg/calc/command"
-	"calculator/pkg/calc/expression"
 )
 
 type Calculator interface {
@@ -10,18 +9,15 @@ type Calculator interface {
 }
 
 func NewCalculator(
-	storage expression.Storage,
 	parser command.Parser,
 ) Calculator {
 	return &calculator{
-		storage: storage,
-		parser:  parser,
+		parser: parser,
 	}
 }
 
 type calculator struct {
-	storage expression.Storage
-	parser  command.Parser
+	parser command.Parser
 }
 
 func (c *calculator) RunCommand(str string) {

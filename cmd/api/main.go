@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"calculator/pkg/calc"
+	"calculator/pkg/calc/cache"
 	"calculator/pkg/calc/command"
 	"calculator/pkg/calc/expression"
 )
@@ -14,10 +15,17 @@ func main() {
 	in := bufio.NewReader(os.Stdin)
 	out := os.Stdout
 
-	storage := expression.NewStorage()
-	parser := command.NewParser(storage, out)
+	cacheStorage := cache.NewCacheStorage()
 
-	calculator := calc.NewCalculator(storage, parser)
+	storage := expression.NewStorage()
+	cStorage := cache.NewCacheForStorage(storage, cacheStorage)
+
+	cmdBuilder := command.NewCmdBuilder(cStorage)
+	cacheCmdBuilder := cache.NewCacheCmdBuilder(cmdBuilder, cacheStorage)
+
+	parser := command.NewParser(cStorage, out, cacheCmdBuilder)
+
+	calculator := calc.NewCalculator(parser)
 
 	for {
 		var str string
