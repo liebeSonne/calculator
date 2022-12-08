@@ -17,10 +17,10 @@ type commandLetVal struct {
 }
 
 func (c *commandLetVal) Execute() {
-	if c.storage.IsFn(c.id) {
-		return
-	}
 	if c.storage.Has(c.id) {
+		if c.storage.IsFn(c.id) {
+			return
+		}
 		let := c.storage.GetVar(c.id)
 		(*let).SetValue(c.value)
 	} else {
