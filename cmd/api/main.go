@@ -25,7 +25,7 @@ func main() {
 
 	parser := command.NewParser(cStorage, out, cacheCmdBuilder)
 
-	calculator := calc.NewCalculator(parser)
+	calculator := calc.NewCalculator(parser, out)
 
 	for {
 		var str string
